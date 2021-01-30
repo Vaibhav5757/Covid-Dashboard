@@ -59,7 +59,7 @@ export default {
                     name: this.countryName
                 },
                 headers: {
-                    'x-rapidapi-key': 'jHSLEV6Sllmshbu3gFfJkCIVkR7Yp1t7FoYjsnGIl8nt0rgYyf',
+                    'x-rapidapi-key': process.env.VUE_APP_COVID_API_KEY,
                     'x-rapidapi-host': 'covid-19-data.p.rapidapi.com'
                 }
             });

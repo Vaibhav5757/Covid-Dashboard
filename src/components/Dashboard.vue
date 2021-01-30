@@ -17,6 +17,7 @@
 
         <!-- Data related to country -->
         <div class="mt-5" v-if="country != ''">
+            <CountryImage :countryName="country" />
             <CountryStats :countryName="country" />
         </div>
         
@@ -31,12 +32,14 @@
 const axios = require('axios').default
 import CountryStats from './CountryStats.vue'
 import imageCarousel from './Carousel.vue'
+import CountryImage from './CountryImage.vue'
 
 export default {
     name: 'Dashboard',
     components: { 
         CountryStats,
-        imageCarousel
+        imageCarousel,
+        CountryImage
     },
     data: () => ({
         images: [],
