@@ -33,30 +33,24 @@ export default {
     props: [
         'countryName'
     ],
-    data() {
-        return {
-            stats: [],
-            confirmed: 0,
-            recovered: 0,
-            critical: 0,
-            deaths: 0
+    computed: {
+        stats(){
+            return this.$store.state
+                    .countryWiseStats.filter(el => el.country == this.countryName)[0]
+        },
+        confirmed(){
+            return this.stats.cases.total || "N/A";
+        },
+        recovered(){
+            return this.stats.cases.recovered || "N/A";
+        },
+        critical(){
+            return this.stats.cases.critical || "N/A";
+        },
+        deaths(){
+            return this.stats.deaths.total || "N/A";
         }
     },
-    async created() {
-        this.updateStats();
-    },
-    async updated() {
-        this.updateStats();
-    },
-    methods: {
-        updateStats: function() {
-            var stats = this.$store.state.countryWiseStats.filter(el => el.country == this.countryName);
-            this.confirmed = stats[0].cases.total;
-            this.recovered = stats[0].cases.recovered;
-            this.critical = stats[0].cases.critical;
-            this.deaths = stats[0].deaths.total;
-        }
-    }
 }
 </script>
 
