@@ -54,24 +54,15 @@ export default {
 
         // Fetch Stats of all Countries
         this.$store.dispatch('getCompleteStats');
-
-        let tempData = [];
         
         // Fetch covid related images
-        tempData = await axios.get("https://pixabay.com/api/?q=" + 'Covid' + "&key=" + process.env.VUE_APP_IMAGE_API_KEY);
-        tempData.data.hits.forEach((element) => {
-            this.images.push(element.largeImageURL);
-        });
+        var { data } = await axios.get("https://pixabay.com/api/?q=" + 'Covid' + "&key=" + process.env.VUE_APP_IMAGE_API_KEY);
+        this.images = data.hits.map(el => el.largeImageURL);
     },
     methods: {
         dropdownChange: async function(){
-            var tempData = await axios.get("https://pixabay.com/api/?q=" + this.country + "&key=" + process.env.VUE_APP_IMAGE_API_KEY);
-            if(tempData.data.totalHits > 0){
-                this.images = [];
-                tempData.data.hits.forEach((element) => {
-                    this.images.push(element.largeImageURL);
-                });
-            }
+            var { data } = await axios.get("https://pixabay.com/api/?q=" + this.country + "&key=" + process.env.VUE_APP_IMAGE_API_KEY);
+            this.images = data.hits.map(el => el.largeImageURL);
         }
     }
 }
