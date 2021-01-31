@@ -28,6 +28,12 @@ export default {
     },
     methods: {
         updateStats: async function(){
+            this.options = {
+                xaxis: {
+                    categories: []
+                }
+            };
+            this.series = [];
             var { data } = await axios.get("https://covid-193.p.rapidapi.com/history",{
                 headers: {
                     'x-rapidapi-key': process.env.VUE_APP_COVID_API_KEY,
