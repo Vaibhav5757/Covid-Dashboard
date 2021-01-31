@@ -47,20 +47,26 @@ export default {
                 },
                 yaxis: {
                     labels: {
-                        show: false
+                        show: true
                     }
                 },
                 colors: ['#0a043c', '#00e396', '#ef4f4f'],
                 grid: {
                     yaxis: {
                         lines: {
-                            show: false
+                            show: true
                         }
                     }
                 },
                 chart: {
                     toolbar: {
                         show: false
+                    },
+                    animations: {
+                        enabled: false
+                    },
+                    markers: {
+                        size: 0
                     }
                 }
             };
