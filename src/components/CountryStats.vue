@@ -19,16 +19,19 @@
                 <StatsBubble name="deaths" :value="deaths"/>
             </div>
         </div>
+        <CountryTimeline :countryName="countryName"/>
     </div>
 </template>
 
 <script>
 import StatsBubble from './StatsBubble.vue'
+import CountryTimeline from './Timeline.vue';
 
 export default {
     name: 'CountryStats',
     components: {
-        StatsBubble
+        StatsBubble,
+        CountryTimeline
     },
     props: [
         'countryName'
