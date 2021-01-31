@@ -42,9 +42,19 @@ export default {
     data: () => ({
         images: ['https://media.gettyimages.com/photos/corona-virus-picture-id1212213054'],
         country: '',
-        countries: []
     }),
+    computed: {
+        countries(){
+            return this.$store.state.countryNames;
+        }
+    },
     async created(){
+        // Fetch Name of all Countries
+        this.$store.dispatch('getCountries');
+
+        // Fetch Stats of all Countries
+        this.$store.dispatch('getCompleteStats');
+
         let tempData = [];
         
         // Fetch covid related images
@@ -52,17 +62,6 @@ export default {
         tempData.data.hits.forEach((element) => {
             this.images.push(element.largeImageURL);
         });
-        
-        // Fetch Name of all Countries
-        tempData = await axios.get("https://covid-19-data.p.rapidapi.com/help/countries", {
-            headers: {
-                'x-rapidapi-key': process.env.VUE_APP_COVID_API_KEY,
-                'x-rapidapi-host': 'covid-19-data.p.rapidapi.com'
-            }
-        });
-        tempData.data.forEach(el => {
-            this.countries.push(el.name);
-        }); 
     },
     methods: {
         dropdownChange: async function(){

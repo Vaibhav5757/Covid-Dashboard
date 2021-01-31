@@ -12,6 +12,7 @@ import Icon from 'vue-awesome/components/Icon'
 import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import store from '../store';
 
 Vue.config.productionTip = false
 
@@ -37,5 +38,6 @@ Vue.component('v-icon', Icon);
 Vue.use(BootstrapVue);
 
 new Vue({
-  render: h => h(App)
+  render: h => h(App),
+  store
 }).$mount('#app')

@@ -1,31 +1,28 @@
 <template>
     <div>
         <span class="d-none">{{ countryName }}</span>
-        <div v-if="stats.length > 0">
-            <div class="icon-container">
-                <div class="icon">
-                    <v-icon class="warning" name="plus-circle" scale="5"></v-icon>
-                    <StatsBubble name="Confirmed" :value="confirmed"/>
-                </div>
-                <div class="icon">
-                    <v-icon class="success" name="check-circle" scale="5"></v-icon>
-                    <StatsBubble name="recovered" :value="recovered"/>
-                </div>
-                <div class="icon">
-                    <v-icon class="danger" name="exclamation-circle" scale="5"></v-icon>
-                    <StatsBubble name="critical" :value="critical"/>
-                </div>
-                <div class="icon">
-                    <v-icon class="death" name="thermometer-half" scale="5"></v-icon>
-                    <StatsBubble name="deaths" :value="deaths"/>
-                </div>
+        <div class="icon-container">
+            <div class="icon">
+                <v-icon class="warning" name="plus-circle" scale="5"></v-icon>
+                <StatsBubble name="Confirmed" :value="confirmed"/>
+            </div>
+            <div class="icon">
+                <v-icon class="success" name="check-circle" scale="5"></v-icon>
+                <StatsBubble name="recovered" :value="recovered"/>
+            </div>
+            <div class="icon">
+                <v-icon class="danger" name="exclamation-circle" scale="5"></v-icon>
+                <StatsBubble name="critical" :value="critical"/>
+            </div>
+            <div class="icon">
+                <v-icon class="death" name="thermometer-half" scale="5"></v-icon>
+                <StatsBubble name="deaths" :value="deaths"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
 import StatsBubble from './StatsBubble.vue'
 
 export default {
@@ -46,28 +43,18 @@ export default {
         }
     },
     async created() {
-        await this.updateStats();
+        this.updateStats();
     },
     async updated() {
-        await this.updateStats();
+        this.updateStats();
     },
     methods: {
-        updateStats: async function() {
-            var ref = this;
-            var { data } = await axios.get('https://covid-19-data.p.rapidapi.com/country',{
-                params: {
-                    name: this.countryName
-                },
-                headers: {
-                    'x-rapidapi-key': process.env.VUE_APP_COVID_API_KEY,
-                    'x-rapidapi-host': 'covid-19-data.p.rapidapi.com'
-                }
-            });
-            ref.stats = await data;
-            ref.confirmed = ref.stats[0].confirmed;
-            ref.recovered = ref.stats[0].recovered;
-            ref.critical = ref.stats[0].critical;
-            ref.deaths = ref.stats[0].deaths;
+        updateStats: function() {
+            var stats = this.$store.state.countryWiseStats.filter(el => el.country == this.countryName);
+            this.confirmed = stats[0].cases.total;
+            this.recovered = stats[0].cases.recovered;
+            this.critical = stats[0].cases.critical;
+            this.deaths = stats[0].deaths.total;
         }
     }
 }
