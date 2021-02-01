@@ -18,6 +18,7 @@
         <!-- Data related to country -->
         <div class="mt-5" v-if="country != ''">
             <CountryStats :countryName="country" />
+            <md-progress-spinner v-if="series.length == 0" md-mode="indeterminate"></md-progress-spinner>
             <CountryTimeline v-if="series.length" :options="options" :series="series"/>
         </div>
         
@@ -72,6 +73,12 @@ export default {
             var { data } = await axios.get("https://pixabay.com/api/?q=" + this.country + "&key=" + process.env.VUE_APP_IMAGE_API_KEY);
             this.images = data.hits.map(el => el.largeImageURL);
 
+            this.options = {
+                xaxis: {
+                    categories: []
+                }
+            };
+            this.series = [];
             var tempData = await axios.get("https://covid-193.p.rapidapi.com/history",{
                 headers: {
                     'x-rapidapi-key': process.env.VUE_APP_COVID_API_KEY,
