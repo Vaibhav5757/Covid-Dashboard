@@ -3,91 +3,13 @@
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
     name: 'CountryTimeline',
     props: [
-        'countryName'
-    ],
-    async created(){
-        this.updateStats();
-    },
-    async updated(){
-        this.updateStats();
-    },
-    data: function() {
-        return {
-            options: {
-                xaxis: {
-                    categories: []
-                }
-            },
-            series: []
-        }
-    },
-    methods: {
-        updateStats: async function(){
-            this.options = {
-                xaxis: {
-                    categories: []
-                }
-            };
-            this.series = [];
-            var { data } = await axios.get("https://covid-193.p.rapidapi.com/history",{
-                headers: {
-                    'x-rapidapi-key': process.env.VUE_APP_COVID_API_KEY,
-                    'x-rapidapi-host': 'covid-193.p.rapidapi.com',
-                    'useQueryString': true
-                },
-                params: {
-                    country: this.countryName
-                }
-            });
-            this.options = {
-                xaxis: {
-                    categories: data.response.map(el => el.day).reverse(),
-                    labels: {
-                        show: false
-                    }
-                },
-                yaxis: {
-                    labels: {
-                        show: true
-                    }
-                },
-                colors: ['#0a043c', '#00e396', '#ef4f4f'],
-                grid: {
-                    yaxis: {
-                        lines: {
-                            show: true
-                        }
-                    }
-                },
-                chart: {
-                    toolbar: {
-                        show: false
-                    },
-                    animations: {
-                        enabled: false
-                    },
-                    markers: {
-                        size: 0
-                    }
-                }
-            };
-            this.series = [{
-                    name: 'Total Active',
-                    data: data.response.map(el => el.cases.active).reverse()
-                },{
-                    name: 'Total Recovered',
-                    data: data.response.map(el => el.cases.recovered).reverse()
-                },{
-                    name: 'Total Deaths',
-                    data: data.response.map(el => el.deaths.total).reverse()
-            }]
-        }
-    }
+        'options',
+        'series'
+    ]
 }
 </script>
 
