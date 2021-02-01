@@ -7,6 +7,10 @@
                 <StatsBubble name="Confirmed" :value="confirmed"/>
             </div>
             <div class="icon">
+                <v-icon class="active" name="user-circle" scale="5"></v-icon>
+                <StatsBubble name="active" :value="active"/>
+            </div>
+            <div class="icon">
                 <v-icon class="success" name="check-circle" scale="5"></v-icon>
                 <StatsBubble name="recovered" :value="recovered"/>
             </div>
@@ -49,6 +53,9 @@ export default {
         },
         deaths(){
             return this.stats.deaths.total || "N/A";
+        },
+        active(){
+            return this.stats.cases.active || "N/A";
         }
     },
 }
@@ -68,7 +75,7 @@ export default {
 }
 .icon {
     font-family: 'Balsamiq Sans', cursive;
-    width: 25%;
+    width: 20%;
 }
 .warning {
     color: #212529;
@@ -90,6 +97,10 @@ export default {
     color: #6c757d;
     background-color: #FFF;
     border-color: #6c757d;
+    border-radius: 50%;
+}
+.active{
+    color: #ff165d;
     border-radius: 50%;
 }
 @media screen and (max-width: 767px) {
